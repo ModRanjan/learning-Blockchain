@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>blockchain sample</title>
+
+</head>
+<style>
+    /*
+        ** SPACING SYSTEM (px)
+        2 / 4 / 8 / 12 / 16 /  24 / 32 / 48 / 64 / 80 / 96 / 128
+
+        ** FONT SIZE SYSTEM (px)
+        10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 /74 / 86 / 98
+
+        main color: #087f5b;
+        grey color: #343a40;
+    */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Inter", sans-serif;
+        color: #343a40;
+        line-height: 1;
+        height: fit-content;
+    }
+
+    .form-label {
+        margin: 10px auto 2px;
+    }
+
+    .pointer {
+        cursor: default;
+    }
+
+    .alert {
+        display: none;
+        line-height: 0.4;
+        margin: 10px auto;
+        padding: 11px;
+        text-align: center;
+    }
+
+    .container {
+        display: none;
+        margin-top: 10px;
+        border: 2px solid #087f5b;
+        padding: 10px;
+        line-height: 1.5;
+    }
+
+    .input-group .form-control,
+    .col-md-6 .form-control,
+    .col-12 .form-control {
+        box-shadow: none;
+        border: 1px solid #ccd4da;
+        cursor: default;
+    }
+</style>
+
+<body>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    View Blockchain:
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <form class="row g-3">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <input type="text" class="form-control" id="index" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Time-Stamp</label>
+                            <input type="text" class="form-control" id="timestamp" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nonce</label>
+                            <input type="text" class="form-control" id="nonce" readonly>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Previous Hash :</label>
+                            <input type="text" class="form-control" id="prevHash" readonly>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Current Hash :</label>
+                            <input type="text" class="form-control" id="currHash" readonly>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary show-Genesis-Block">View Genesis
+                                Block</button>
+                            <button type="button" class="btn btn-primary show-Previous-Block">View Previous
+                                Block</button>
+                            <button type="button" class="btn btn-primary show-Next-Block">View Next
+                                Block</button>
+                            <button type="button" class="btn btn-primary show-Recent-Block">View Recent
+                                Block</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Perform Transaction:
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <label for="sender" class="form-label">Sender's Wallet Address:</label>
+                    <input type="text" class="form-control" id="sender" placeholder="@ Sender's Wallet Address">
+
+                    <label for="recipient" class="form-label">Recepient's Wallet Address:</label>
+                    <input type="text" class="form-control" id="recipient" placeholder="@ Recipient's Wallet Address:">
+
+                    <label for="amount" class="form-label">Amount:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">&#8383;</span>
+                        <input type="text" class="form-control" id="amount">
+                    </div>
+
+                    <button class="btn btn-secondary transaction">Click Here To Transaction</button>
+                    <p class="alert alert-success" id="alert-success" role="alert"></p>
+                    <p class="alert alert-danger" id="alert-danger" role="alert"></p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Mine New Block:
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="miner-address"
+                            placeholder="Enter your Wallet Address to get reward">
+                        <button class="btn btn-success mine-block">Mine New Block</button>
+                        <!-- <button class="btn btn-success" id="CalculateHash">convert hash</button> -->
+                    </div>
+
+                    <div class="container" id="block">
+                        <h3>New Block :</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Block No. :</label>
+                                <input type="text" class="form-control" id="new-block-index" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nonce :</label>
+                                <input type="text" class="form-control" id="new-block-nonce" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Previous Hash :</label>
+                                <input type="text" class="form-control" id="previous-block-hash" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Current Hash :</label>
+                                <input type="text" class="form-control" id="new-block-hash" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <Script src="blockchain.js"></Script> -->
+    <Script src="sha256.js" type="module"></Script>
+    <Script src="function-implementation.js" type="module"></Script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+
+
+</body>
+
+</html>
